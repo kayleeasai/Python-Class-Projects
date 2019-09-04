@@ -81,7 +81,7 @@ def repeating_alerts(lifespan, repeat, _message):
             Val = 1
             message = twilio_client.messages.create(
                 to=number,
-                from_="+15307231680",
+                from_="Number Associated with Twilio Account",
                 body=_message)
             print('Your Reminder has been sent')
     return
@@ -89,8 +89,8 @@ def repeating_alerts(lifespan, repeat, _message):
 start = input('Would you like a plant care reminder? (y/n)')
 if start == 'y':
     #input twilio data
-    account_sid = 'ACdb128d27412d67933700c209a5fcef63'
-    auth_token = 'ca5c28abd9d263ee112b079f9b39e19c'
+    account_sid = 'Twilio ID'
+    auth_token = 'Twilio Token'
     number = input('What phone number do you want to receive reminders on? (Format: +1XXXXXXXXXX)')
     twilio_client = Client(account_sid, auth_token)
     plant_program()
