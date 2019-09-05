@@ -58,7 +58,7 @@ def plant_program():
                             _message = 'This is a reminder to water your plant ' + identifier + ' with 8oz of water'
                     else:
                         av_Inrain_perday = ((float(precip_max) + float(precip_min)) / 2) / 365
-                        av_plants_per_sqrIn = ((density_max + density_min) / 2) / 43560 / 144
+                        av_plants_per_sqrIn = ((density_max + density_min) / 2) / 10.7639 / 144 
                         water_vol_per_day = av_Inrain_perday / av_plants_per_sqrIn
                         days_oz = int(8 / (water_vol_per_day / 14.4375))  # days per oz of water
                         if days_oz >= 3:
