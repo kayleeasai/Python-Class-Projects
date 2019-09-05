@@ -34,19 +34,21 @@ def plant_program():
                     SD = data.json()
                     life = SD['main_species']['specifications']['lifespan']
                     if life == "Short":
-                        lifespan = 10 #0 * 12 * 4 * 7 * 24 * 60 * 60
+                        lifespan = 100 * 12 * 4 * 7 * 24 * 60 * 60
                     elif life == "Moderate":
-                        lifespan = 25 #0 * 12 * 4 * 7 * 24 * 60 * 60
+                        lifespan = 250 * 12 * 4 * 7 * 24 * 60 * 60
                     else:
                         timeline = int(input('The lifespan information either does not exist, or is longer than 250 years. '
                                              'How long do you want to receive reminders for? (Please convert to months)'))
-                        lifespan = timeline #* 4 * 7 * 24 * 60 * 60
+                        lifespan = timeline * 4 * 7 * 24 * 60 * 60
 
                     precip_min = str(SD['main_species']['growth']['precipitation_minimum']['inches'])
                     precip_max = str(SD['main_species']['growth']['precipitation_maximum']['inches'])
+                    density_max = SD['main_species']['growth']['planting_density_maximum']['sqm']
+                    density_min = SD['main_species']['growth']['planting_density_minimum']['sqm']
 
-                    if precip_min == 'None' or precip_max == 'None':
-                        size = input('There is no watering data so lets add some. Is your plant a large or small? (l/s)')
+                    if precip_min == 'None' or precip_max == 'None' or str(density_max) == 'None' or str(density_min)== 'None':
+                        size = input('There is missing watering data so lets add some. Is your plant a large or small? (l/s)')
                         if size == 's':
                             repeat = int(input('How frequently do you want to receive a reminder to water your plant 2oz of water? (Please convert to days)'))
                             _message = 'This is a reminder to water your plant ' + identifier + ' with 2oz of water'
@@ -55,19 +57,17 @@ def plant_program():
                             _message = 'This is a reminder to water your plant ' + identifier + ' with 8oz of water'
                     else:
                         av_Inrain_perday = ((float(precip_max) + float(precip_min)) / 2) / 365
-                        density_max = SD['main_species']['growth']['planting_density_maximum']['sqm']
-                        density_min = SD['main_species']['growth']['planting_density_minimum']['sqm']
                         av_plants_per_sqrIn = ((density_max + density_min) / 2) / 43560 / 144
                         water_vol_per_day = av_Inrain_perday / av_plants_per_sqrIn
                         days_oz = int(8 / (water_vol_per_day / 14.4375))  # days per oz of water
                         if days_oz >= 3:
                             _message = 'This is a reminder to water your plant ' + identifier + ' with 2oz of water'
-                            repeat = 5#days_oz * 2
+                            repeat = days_oz * 2
                         else:
                             _message = 'This is a reminder to water your plant ' + identifier + ' with 8oz of water'
-                            repeat = 5 #days_oz * 8
+                            repeat = days_oz * 8
                 else:
-                    print('')
+                    v=[]
             repeating_alerts(lifespan, repeat, _message)
 
     elif type == 'n':
@@ -79,7 +79,7 @@ def plant_program():
             repeat = int(input('How frequently do you want to receive a reminder to water your plant 8oz of water? (Please convert to days)'))
             _message = 'This is a reminder to water your plant ' + identifier + ' with 8oz of water'
         timeline = int(input('How long do you want to receive reminders for? (Please convert to months)'))
-        lifespan = timeline #* 4 * 7 * 24 * 60 * 60
+        lifespan = timeline * 4 * 7 * 24 * 60 * 60
         repeating_alerts(lifespan, repeat, _message)
     return
 
@@ -110,13 +110,3 @@ if start == 'y':
 
 else:
     print('Thank you and come again!')
-
-
-
-
-
-
-
-
-
-
