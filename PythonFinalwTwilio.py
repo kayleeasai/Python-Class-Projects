@@ -68,7 +68,7 @@ def plant_program():
                             repeat = 5 #days_oz * 8
                 else:
                     print('')
-                repeating_alerts(lifespan, repeat, _message)
+            repeating_alerts(lifespan, repeat, _message)
 
     elif type == 'n':
         size = input('Let us input some requirements then. Is your plant a large or small? (l/s)')
@@ -89,7 +89,7 @@ def repeating_alerts(lifespan, repeat, _message):
         Val = num % repeat
         while Val == 0:
             # seconds in a day
-            sleep_length = repeat #* 24 * 60 * 60
+            sleep_length = repeat * 24 * 60 * 60
             sleep(sleep_length)
             Val = 1
             message = twilio_client.messages.create(
