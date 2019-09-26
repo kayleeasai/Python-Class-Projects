@@ -1,1 +1,1 @@
-# Python Course Projects
+# Python Projects
